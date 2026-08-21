@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Kufar USD Converter",
+  "version": "1.4",
+  "description": "Конвертирует цены из BYN в USD на сайте kufar.by",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://re.kufar.by/*",
+    "https://www.kufar.by/*",
+    "https://api.nbrb.by/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://re.kufar.by/*",
+        "https://www.kufar.by/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
