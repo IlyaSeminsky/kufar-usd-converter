@@ -1,4 +1,4 @@
-// Kufar USD Converter — content script.
+// Kufar Currency Converter — content script.
 // Находит цены в BYN на странице и показывает под ними приблизительную цену в USD.
 
 const USD_LINE_CLASS = 'kufar-usd-price';
@@ -283,7 +283,7 @@ async function resolveRate() {
     return directRate;
   }
 
-  console.warn('Kufar USD Converter: используем резервный курс', FALLBACK_RATE);
+  console.warn('Kufar Currency Converter: используем резервный курс', FALLBACK_RATE);
   return FALLBACK_RATE;
 }
 
@@ -301,7 +301,7 @@ async function readCachedRate() {
 
     return stored.usdRate;
   } catch (error) {
-    console.error('Kufar USD Converter: не удалось прочитать курс из storage', error);
+    console.error('Kufar Currency Converter: не удалось прочитать курс из storage', error);
     return null;
   }
 }
@@ -313,7 +313,7 @@ async function requestRateFromBackground() {
     const response = await chrome.runtime.sendMessage({ action: 'getRate' });
     return response && response.rate ? response.rate : null;
   } catch (error) {
-    console.error('Kufar USD Converter: service worker не ответил', error);
+    console.error('Kufar Currency Converter: service worker не ответил', error);
     return null;
   }
 }
@@ -321,16 +321,20 @@ async function requestRateFromBackground() {
 async function fetchRateDirectly() {
   try {
     const response = await fetch(NATIONAL_BANK_USD_RATE_URL);
+    if (!response.ok) {
+      throw new Error(`api.nbrb.by ответил ${response.status}`);
+    }
+
     const data = await response.json();
     const rate = data.Cur_OfficialRate;
     if (!rate) {
       return null;
     }
 
-    chrome.storage.local.set({ usdRate: rate, lastUpdate: new Date().toISOString() });
+    await chrome.storage.local.set({ usdRate: rate, lastUpdate: new Date().toISOString() });
     return rate;
   } catch (error) {
-    console.error('Kufar USD Converter: не удалось получить курс с api.nbrb.by', error);
+    console.error('Kufar Currency Converter: не удалось получить курс с api.nbrb.by', error);
     return null;
   }
 }

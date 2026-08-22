@@ -5,6 +5,10 @@
 const NATIONAL_BANK_USD_RATE_URL = 'https://api.nbrb.by/exrates/rates/431';
 const RATE_REQUEST_TIMEOUT_MILLISECONDS = 5000;
 
+chrome.action.onClicked.addListener(() => {
+  chrome.runtime.openOptionsPage();
+});
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action !== 'getRate') {
     return false;
@@ -13,7 +17,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   fetchUsdRate()
     .then((rate) => sendResponse({ rate: rate }))
     .catch((error) => {
-      console.error('Kufar USD Converter: не удалось получить курс', error);
+      console.error('Kufar Currency Converter: не удалось получить курс', error);
       sendResponse({ rate: null });
     });
 

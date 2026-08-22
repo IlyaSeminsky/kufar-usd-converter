@@ -1,8 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "Kufar USD Converter",
-  "version": "1.4",
+  "name": "Kufar Currency Converter",
+  "version": "1.5",
   "description": "Конвертирует цены из BYN в USD на сайте kufar.by",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Kufar Currency Converter"
+  },
+  "options_page": "options.html",
   "permissions": [
     "storage"
   ],

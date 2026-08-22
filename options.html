@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Kufar Currency Converter — настройки</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page__header">
+      <img src="icons/icon48.png" alt="" class="page__logo">
+      <h1>Kufar Currency Converter</h1>
+    </header>
+
+    <section class="card">
+      <h2>Текущий курс</h2>
+      <p class="rate" id="rate-value">Загрузка…</p>
+      <p class="rate-updated" id="rate-updated"></p>
+      <button id="refresh-button" type="button">Обновить курс</button>
+      <p class="status" id="refresh-status" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>Как это работает</h2>
+      <p>
+        Расширение получает официальный курс доллара США к белорусскому рублю
+        с сайта Национального банка Республики Беларусь
+        (<code>api.nbrb.by/exrates/rates/431</code>).
+      </p>
+      <ul>
+        <li>Курс запрашивается один раз и кэшируется локально на устройстве.</li>
+        <li>Кэш считается свежим 24 часа — всё это время используется сохранённое значение без новых запросов.</li>
+        <li>По истечении 24 часов курс запрашивается заново автоматически при следующем открытии страницы kufar.by.</li>
+        <li>Если Нацбанк недоступен, используется запасное значение <strong>3.25</strong>, пока не удастся получить актуальный курс.</li>
+        <li>Кнопка «Обновить курс» выше запрашивает курс немедленно, не дожидаясь истечения суток.</li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
